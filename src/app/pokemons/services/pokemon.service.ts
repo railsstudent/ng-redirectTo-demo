@@ -9,7 +9,7 @@ const URL = 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=10';
 @Injectable({
   providedIn: 'root'
 })
-export class PokermonService {
+export class PokemonService {
   private readonly http = inject(HttpClient);
 
   getPokemons(): Observable<PokemonLink[]> {

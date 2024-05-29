@@ -3,12 +3,12 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: 'pokermon-list',
-        loadComponent: () => import('./pokermons/pokermon-list/pokermon-list.component'),
+        loadComponent: () => import('./pokemons/pokemon-list/pokemon-list.component'),
         title: 'Pokermon List',
     }, 
     {
         path: 'pokermon-list/:name',
-        loadComponent: () => import('./pokermons/pokermon/pokermon.component'),
+        loadComponent: () => import('./pokemons/pokemon/pokemon.component'),
         title: 'Pokermon',
     }, 
     {

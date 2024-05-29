@@ -1,10 +1,10 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PokemonType } from '../types/pokemon.type';
-import { PokermonService } from './../services/pokermon.service';
+import { PokemonService } from '../services/pokemon.service';
 
 @Component({
-  selector: 'app-pokermon',
+  selector: 'app-pokemon',
   standalone: true,
   imports: [RouterLink],
   template: `
@@ -60,7 +60,7 @@ import { PokermonService } from './../services/pokermon.service';
 export default class PokermonComponent {
   name = input.required<string>();
   url = input.required<string>();
-  service = inject(PokermonService);
+  service = inject(PokemonService);
   pokemon = signal<PokemonType | null>(null);
 
   constructor() {

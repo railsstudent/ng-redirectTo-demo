@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { PokermonService } from '../services/pokermon.service';
+import { PokemonService } from '../services/pokemon.service';
 
 @Component({
-  selector: 'app-pokermon-list',
+  selector: 'app-pokemon-list',
   standalone: true,
   imports: [RouterLink],
   template: `
@@ -36,8 +36,8 @@ import { PokermonService } from '../services/pokermon.service';
     }
   `,
 })
-export default class PokermonListComponent {
-  pokemonService = inject(PokermonService);
+export default class PokemonListComponent {
+  pokemonService = inject(PokemonService);
 
   pokemons = toSignal(this.pokemonService.getPokemons(), { initialValue: [] });
 }
