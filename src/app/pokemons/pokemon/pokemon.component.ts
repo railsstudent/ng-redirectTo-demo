@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PokemonType } from '../types/pokemon.type';
 import { PokemonService } from '../services/pokemon.service';
@@ -8,64 +8,70 @@ import { PokemonService } from '../services/pokemon.service';
   standalone: true,
   imports: [RouterLink],
   template: `
-    @if(pokemon(); as pokemon) {
-      @if (pokemon) {
+    @if(!hasPokemon()) {
+      <p>{{ name() }} is not found.</p>
+    } @else {
+      @if (pokemon(); as pokemon) {
         <div>
-          @if (pokemon.image)  {
+          @if (pokemon?.image)  {
             <div>
-              <img alt='Pokemon image' [src]="pokemon.image" width="120" height="120" />
+              <img alt='Pokemon image' [src]="pokemon?.image" width="120" height="120" />
             </div>
           }
           <div class="row">
             <div>
               <label for="id">
                 <span>Id: </span>
-                <span id="id" name="id">{{ pokemon.id }}</span>
+                <span id="id" name="id">{{ pokemon?.id }}</span>
               </label>
             </div>
             <div>
               <label for="name">
                 <span>Name: </span>
-                <span id="name" name="name">{{ pokemon.name }}</span>
+                <span id="name" name="name">{{ pokemon?.name }}</span>
               </label>
             </div>
             <div>
               <label for="weight">
                 <span>Weight: </span>
-                <span id="weight" name="weight">{{ pokemon.weight }}</span>
+                <span id="weight" name="weight">{{ pokemon?.weight }}</span>
               </label>
             </div>
             <div>
               <label for="height">
                 <span>Height: </span>
-                <span id="height" name="height">{{ pokemon.height }}</span>
+                <span id="height" name="height">{{ pokemon?.height }}</span>
               </label>
             </div>
           </div>       
         </div>
-        <div>
-          <a [routerLink]="'/pokermon-list'">Back</a>
-        </div>
       }
     }
+    <hr />
+    <div>
+      <a [routerLink]="'/pokemon-list'">Back</a>
+    </div>
   `,
   styles: `
     div.row {
       display: flex;
       justify-content: space-between;
+    }
+
+    hr {
       margin-bottom: 1rem;
     }
   `,
 })
 export default class PokermonComponent {
   name = input.required<string>();
-  url = input.required<string>();
   service = inject(PokemonService);
-  pokemon = signal<PokemonType | null>(null);
+  pokemon = signal<PokemonType | null | undefined>(null);
+  hasPokemon = computed(() => this.pokemon() !== null);
 
   constructor() {
     effect((cleanUp) => {
-      const sub = this.service.getPokemon(this.url())
+      const sub = this.service.getPokemon(this.name())
         .subscribe((result) => this.pokemon.set(result));
 
       cleanUp(() => sub.unsubscribe());

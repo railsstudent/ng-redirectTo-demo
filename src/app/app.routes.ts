@@ -17,14 +17,9 @@ export const routes: Routes = [
     },
     {
         path: 'pokermon-list/:name',
-        redirectTo: ({ queryParams, params }) => {
-            const name = params['name'];
-            const url = queryParams['url'];
-            if (name && url) {
-                return `/pokemon-list/${name}?url=${url}`;
-            }
-
-            return 'pokemon-list';
+        redirectTo: ({ params }) => {
+            const name = params?.['name'] || '';
+            return name ? `/pokemon-list/${name}` : 'pokemon-list';
         }
     },
     {
