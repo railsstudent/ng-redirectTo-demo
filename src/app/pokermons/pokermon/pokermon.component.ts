@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-pokermon',
@@ -6,12 +6,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   imports: [],
   template: `
     <p>
-      pokermon works!
+      pokermon works! {{ name() }}, {{ url() }}
     </p>
   `,
   styles: ``,
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PokermonComponent {
-
+  name = input.required<string>();
+  url = input.required<string>();
 }

@@ -7,9 +7,9 @@ export const routes: Routes = [
         title: 'Pokermon List',
     }, 
     {
-        path: 'pokermon/:id',
+        path: 'pokermon-list/:name',
         loadComponent: () => import('./pokermons/pokermon/pokermon.component'),
-        title: 'Pokermon'
+        title: 'Pokermon',
     }, 
     {
         path: '',

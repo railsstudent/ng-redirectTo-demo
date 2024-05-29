@@ -5,6 +5,19 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet],
-  template: '<router-outlet />'
+  template: `
+    <h2>redirectTo Demo</h2>
+    <router-outlet />
+  `,
+  styles: `
+    :host {
+      display: block;
+      padding: 1rem;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+    }
+  `
 })
 export class AppComponent {}
