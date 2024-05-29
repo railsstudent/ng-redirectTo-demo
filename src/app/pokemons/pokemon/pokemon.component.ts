@@ -13,7 +13,7 @@ import { PokemonService } from '../services/pokemon.service';
         <div>
           @if (pokemon.image)  {
             <div>
-              <img alt='Pokemon image' [src]="pokemon.image" width="150" height="150" />
+              <img alt='Pokemon image' [src]="pokemon.image" width="120" height="120" />
             </div>
           }
           <div class="row">
