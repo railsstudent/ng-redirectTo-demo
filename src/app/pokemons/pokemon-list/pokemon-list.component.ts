@@ -11,7 +11,7 @@ import { PokemonService } from '../services/pokemon.service';
     <div class="container">
       @for(p of pokemons(); track p.name) {
         <div class="card">
-          <p>Name: <a [routerLink]="['/pokermon-list', p.name]">{{ p.name }}</a></p>
+          <p>Name: <a [routerLink]="['/pokemon-list', p.name]">{{ p.name }}</a></p>
         </div>
       }
     </div>
