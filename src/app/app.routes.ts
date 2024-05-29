@@ -25,10 +25,10 @@ export const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'pokermon-list'
+        redirectTo: 'pokemon-list'
     },
     {
         path: '**',
-        redirectTo: 'pokermon-list'
+        redirectTo: 'pokemon-list'
     }
 ];
