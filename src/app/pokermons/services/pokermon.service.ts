@@ -24,7 +24,7 @@ export class PokermonService {
           name,
           weight,
           height,
-          image: sprites.front_shiny,
+          image: sprites.front_shiny || '',
         })
       ));
   }
