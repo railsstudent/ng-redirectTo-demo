@@ -1,48 +1,34 @@
-import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PokemonType } from '../types/pokemon.type';
 import { PokemonService } from '../services/pokemon.service';
+import { PokemonType } from '../types/pokemon.type';
 
+type PokemonTypeKeys = keyof PokemonType;
 @Component({
   selector: 'app-pokemon',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, TitleCasePipe],
   template: `
-    @if(!hasPokemon()) {
+    @if(pokemon() == null) {
       <p>{{ name() }} is not found.</p>
     } @else {
       @if (pokemon(); as pokemon) {
         <div>
           @if (pokemon?.image)  {
             <div>
-              <img alt='Pokemon image' [src]="pokemon?.image" width="120" height="120" />
+              <img alt='Pokemon image' [src]="pokemon.image" width="120" height="120" />
             </div>
           }
           <div class="row">
-            <div>
-              <label for="id">
-                <span>Id: </span>
-                <span id="id" name="id">{{ pokemon?.id }}</span>
-              </label>
-            </div>
-            <div>
-              <label for="name">
-                <span>Name: </span>
-                <span id="name" name="name">{{ pokemon?.name }}</span>
-              </label>
-            </div>
-            <div>
-              <label for="weight">
-                <span>Weight: </span>
-                <span id="weight" name="weight">{{ pokemon?.weight }}</span>
-              </label>
-            </div>
-            <div>
-              <label for="height">
-                <span>Height: </span>
-                <span id="height" name="height">{{ pokemon?.height }}</span>
-              </label>
-            </div>
+            @for(key of keys; track key) {
+              <div>
+                <label [for]="key">
+                  <span>{{ key | titlecase }}: </span>
+                  <span [id]="key">{{ getValue(pokemon, key) }}</span>
+                </label>
+              </div>
+            }
           </div>       
         </div>
       }
@@ -66,8 +52,12 @@ import { PokemonService } from '../services/pokemon.service';
 export default class PokermonComponent {
   name = input.required<string>();
   service = inject(PokemonService);
-  pokemon = signal<PokemonType | null | undefined>(null);
-  hasPokemon = computed(() => this.pokemon() !== null);
+  pokemon = signal<PokemonType | null>(null);
+  keys: PokemonTypeKeys[] = ['id', 'name', 'weight', 'height'];
+
+  getValue<T, K extends keyof T>(data: T, key: K) {
+    return data[key];
+  }
 
   constructor() {
     effect((cleanUp) => {
@@ -77,5 +67,4 @@ export default class PokermonComponent {
       cleanUp(() => sub.unsubscribe());
     });
   }
-
 }
