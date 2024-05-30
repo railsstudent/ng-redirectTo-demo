@@ -5,6 +5,7 @@ import { PokemonService } from '../services/pokemon.service';
 import { PokemonType } from '../types/pokemon.type';
 
 type PokemonTypeKeys = keyof PokemonType;
+
 @Component({
   selector: 'app-pokemon',
   standalone: true,
@@ -25,7 +26,7 @@ type PokemonTypeKeys = keyof PokemonType;
               <div>
                 <label [for]="key">
                   <span>{{ key | titlecase }}: </span>
-                  <span [id]="key">{{ getValue(pokemon, key) }}</span>
+                  <span [id]="key">{{ pokemon[key] }}</span>
                 </label>
               </div>
             }
@@ -54,10 +55,6 @@ export default class PokermonComponent {
   service = inject(PokemonService);
   pokemon = signal<PokemonType | null>(null);
   keys: PokemonTypeKeys[] = ['id', 'name', 'weight', 'height'];
-
-  getValue<T, K extends keyof T>(data: T, key: K) {
-    return data[key];
-  }
 
   constructor() {
     effect((cleanUp) => {
